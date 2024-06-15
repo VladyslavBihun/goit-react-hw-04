@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar/SearchBar";
 import Loader from "./Loader/Loader";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./ImageModal/ImageModal";
 
 function App() {
   const [searchWord, setSearchWord] = useState("");
@@ -13,6 +14,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalImage, setModalImage] = useState({ url: "", alt: "" });
 
   useEffect(() => {
     if (searchWord === "") {
@@ -46,14 +50,33 @@ function App() {
     setPage(page + 1);
   };
 
+  const handleImgClick = (url, alt) => {
+    setModalImage({ url, alt });
+    setIsOpen(true);
+  };
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       <SearchBar onSearch={handleSearch} />
       {isError && <ErrorMessage />}
-      {cards.length > 0 && !isError && <ImageGallery cards={cards} />}
+      {cards.length > 0 && !isError && (
+        <ImageGallery cards={cards} onImgClick={handleImgClick} />
+      )}
       {isLoading && !isError && <Loader />}
       {!isLoading && cards.length > 0 && !isError && page < totalPages && (
         <LoadMoreBtn onClick={handleLoadMore} />
+      )}
+      {modalIsOpen && (
+        <ImageModal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          imageUrl={modalImage.url}
+          imageAlt={modalImage.alt}
+        />
       )}
     </>
   );
