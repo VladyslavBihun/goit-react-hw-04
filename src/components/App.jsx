@@ -47,15 +47,15 @@ function App() {
   };
 
   return (
-    <div>
+    <>
       <SearchBar onSearch={handleSearch} />
       {isError && <ErrorMessage />}
       {cards.length > 0 && !isError && <ImageGallery cards={cards} />}
       {isLoading && !isError && <Loader />}
-      {cards.length > 0 && !isError && page < totalPages && (
+      {!isLoading && cards.length > 0 && !isError && page < totalPages && (
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
-    </div>
+    </>
   );
 }
 

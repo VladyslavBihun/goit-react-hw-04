@@ -1,1 +1,26 @@
-Loader
+.header {
+  background-color: #4d5ae5;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+}
+
+.input {
+  height: 25px;
+  width: 500px;
+  border-radius: 5px;
+  border: 2px black solid;
+  margin-right: 10px;
+  padding-left: 6px;
+}
+
+.btn {
+  height: 25px;
+  width: 75px;
+  border-radius: 5px;
+  border: 2px black solid;
+}

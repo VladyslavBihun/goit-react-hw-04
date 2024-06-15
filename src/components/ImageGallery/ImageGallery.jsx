@@ -1,10 +1,11 @@
 import ImageCard from "../ImageCard/ImageCard";
+import css from "./ImageGallery.module.css";
 
 const ImageGallery = ({ cards }) => {
   return (
-    <ul>
+    <ul className={css.list}>
       {cards.map((card) => (
-        <li key={card.id}>
+        <li className={css.item} key={card.id}>
           <ImageCard card={card} />
         </li>
       ))}
