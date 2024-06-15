@@ -14,8 +14,10 @@ const fetchImages = async (searchWord, page) => {
       Authorization: `Client-ID ${KEY}`,
     },
   });
-  console.log(response);
-  return response.data.results;
+  return {
+    results: response.data.results,
+    totalPages: response.data.total_pages,
+  };
 };
 
 export default fetchImages;

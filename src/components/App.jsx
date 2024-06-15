@@ -12,6 +12,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     if (searchWord === "") {
@@ -21,10 +22,11 @@ function App() {
       try {
         setIsLoading(true);
         setIsError(false);
-        const data = await fetchImages(searchWord, page);
+        const { results, totalPages } = await fetchImages(searchWord, page);
         setCards((prevCards) => {
-          return [...prevCards, ...data];
+          return [...prevCards, ...results];
         });
+        setTotalPages(totalPages);
       } catch (error) {
         setIsError(true);
       } finally {
@@ -50,7 +52,9 @@ function App() {
       {isError && <ErrorMessage />}
       {cards.length > 0 && !isError && <ImageGallery cards={cards} />}
       {isLoading && !isError && <Loader />}
-      {cards.length > 0 && !isError && <LoadMoreBtn onClick={handleLoadMore} />}
+      {cards.length > 0 && !isError && page < totalPages && (
+        <LoadMoreBtn onClick={handleLoadMore} />
+      )}
     </div>
   );
 }
